@@ -7,6 +7,9 @@ const helmet = require('helmet');
 
 const app = express();
 
+app.get('/', (req, res) => {
+    return res.send('hey it works!');
+});
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
