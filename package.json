@@ -17,6 +17,7 @@
     },
     "homepage": "https://github.com/Fabiantjoeaon/sleeve#readme",
     "dependencies": {
+        "dotenv": "^4.0.0",
         "express": "^4.16.2",
         "helmet": "^3.9.0",
         "mongodb": "^2.2.33",
