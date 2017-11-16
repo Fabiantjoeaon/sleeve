@@ -4,7 +4,8 @@
     "description": "Useful notes for record sleeves",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon server.js --ignore node_modules public/ env"
+        "dev": "nodemon server.js --ignore node_modules public/ env",
+        "server": "node server.js"
     },
     "repository": {
         "type": "git",
