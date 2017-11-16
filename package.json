@@ -1,19 +1,25 @@
 {
-  "name": "sleeve",
-  "version": "1.0.0",
-  "description": "Useful notes for record sleeves",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Fabiantjoeaon/sleeve.git"
-  },
-  "author": "Fabian Tjoe-A-On",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Fabiantjoeaon/sleeve/issues"
-  },
-  "homepage": "https://github.com/Fabiantjoeaon/sleeve#readme"
+    "name": "sleeve",
+    "version": "1.0.0",
+    "description": "Useful notes for record sleeves",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon server.js --ignore node_modules public/ env"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Fabiantjoeaon/sleeve.git"
+    },
+    "author": "Fabian Tjoe-A-On",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Fabiantjoeaon/sleeve/issues"
+    },
+    "homepage": "https://github.com/Fabiantjoeaon/sleeve#readme",
+    "dependencies": {
+        "express": "^4.16.2",
+        "helmet": "^3.9.0",
+        "mongodb": "^2.2.33",
+        "mongoose": "^4.13.3"
+    }
 }
