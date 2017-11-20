@@ -1,6 +1,5 @@
 const { encrypt, isHashMatching } = require('../helpers/hashing');
 const mongoose = require('mongoose');
-const validate = require('validate.js');
 
 const { Schema } = mongoose;
 mongoose.Promise = global.Promise;
