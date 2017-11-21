@@ -8,6 +8,7 @@ const validate = require('validate.js');
 * @returns {}
 */
 const register = async (req, res) => {
+    console.log('here');
     req.body.username = req.sanitize(req.body.username);
     const { username, password } = req.body;
 
@@ -28,7 +29,9 @@ const register = async (req, res) => {
         password,
         isAdmin: 0
     });
+    console.log(user);
     await user.save();
+    console.log('saved');
 
     return res.status(200).send({
         user,
