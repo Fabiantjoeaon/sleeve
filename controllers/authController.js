@@ -35,3 +35,5 @@ const register = async (req, res) => {
         message: `Succesfully signed up, ${username}!`
     });
 };
+
+module.exports = { register };
