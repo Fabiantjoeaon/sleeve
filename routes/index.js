@@ -7,7 +7,5 @@ module.exports = app => {
         })
     );
 
-    app.use('/api', () => {
-        app.post('/register', authController.register);
-    });
+    app.post('/auth/register', authController.register);
 };

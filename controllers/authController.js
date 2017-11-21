@@ -8,13 +8,12 @@ const validate = require('validate.js');
 * @returns {}
 */
 const register = async (req, res) => {
-    console.log('here');
     req.body.username = req.sanitize(req.body.username);
     const { username, password } = req.body;
 
-    // const errors = validate(req.body, User.getInitialConstraints());
+    const errors = validate(req.body, User.getInitialConstraints());
 
-    // if (errors) res.status(400).send({ errors });
+    if (errors) res.status(400).send({ errors });
 
     if (
         await User.findOne({
@@ -26,12 +25,9 @@ const register = async (req, res) => {
 
     const user = new User({
         username,
-        password,
-        isAdmin: 0
+        password
     });
-    console.log(user);
     await user.save();
-    console.log('saved');
 
     return res.status(200).send({
         user,
