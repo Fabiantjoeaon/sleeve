@@ -1,4 +1,5 @@
 const jwt = require('jwt');
+const to = require('../helpers/to');
 
 /**
  * @private
@@ -6,16 +7,12 @@ const jwt = require('jwt');
  * @param {} [user]
  */
 const checkSessionToken = async token => {
-    let decoded;
-    try {
-        decoded = await jwt.verify(token, process.env.JWT_SECRET);
-    } catch (e) {
-        console.log('error', e);
-        return false;
-    }
+    const { data: decoded, err } = await to(
+        jwt.verify(token, process.env.JWT_SECRET)
+    );
 
-    if (!decoded) return false;
+    if (!decoded || err) return false;
 
-    // Convert to milliseconds
+    // HINT: Convert to milliseconds
     return isTokenExpired(decoded.iat * 1000, process.env.JWT_TOKEN_LIFETIME);
 };

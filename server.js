@@ -1,10 +1,9 @@
-'use strict';
-
 const mongoose = require('mongoose');
 const app = require('./app');
-// mongoose.connect(process.env.DATABASE, {
-//     useMongoClient: true
-// });
+
+mongoose.connect(process.env.DATABASE, {
+    useMongoClient: true
+});
 mongoose.promise = global.Promise;
 mongoose.connection.on('error', err => {
     console.error(err, err.message);
