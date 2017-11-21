@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const helmet = require('helmet');
+const expressSanitizer = require('express-sanitizer');
 
 const app = express();
 
@@ -15,5 +16,8 @@ app.get('/', (req, res) => {
 app.use(helmet());
 app.use(helmet.hidePoweredBy());
 app.use(helmet.noSniff());
+app.use(expressSanitizer({}));
+
+require('./routes')(app);
 
 module.exports = app;
