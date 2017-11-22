@@ -14,6 +14,8 @@ app.get('/', (req, res) => {
 });
 // app.use(express.static(path.join(__dirname, 'public')));
 
+console.log('on server');
+
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(helmet());
