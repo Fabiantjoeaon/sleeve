@@ -1,5 +1,7 @@
-const to = promise =>
-    promise
+const to = promise => {
+    console.log(promise);
+    console.log(typeof promise);
+    return promise
         .then(data => ({
             err: null,
             data
@@ -7,5 +9,6 @@ const to = promise =>
         .catch(err => {
             err;
         });
+};
 
-export default to;
+module.exports = to;
