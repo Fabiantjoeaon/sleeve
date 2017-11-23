@@ -54,7 +54,6 @@ const ensureLoggedIn = async (req, res, next) => {
     const isLegitToken = await checkSessionToken(authHeaderToken);
 
     if (!isLegitToken || !(id == user._id)) {
-        req.session.user = null;
         return res.status(400).json({ message: 'Wrong or expired token.' });
     }
 

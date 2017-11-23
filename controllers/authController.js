@@ -67,23 +67,7 @@ const login = async (req, res) => {
         }
     );
 
-    req.session.user = user;
-    req.session.token = token;
-
     return res.status(200).json({ token, user });
 };
-
-/**
- *
- * @param {Object} req
- * @param {Object} res
- * @returns {}
- */
-// const logout = (req, res) => {
-//     req.session.user = null;
-//     req.session.token = null;
-//     // res.clearCookie('token');
-//     return res.status(200).json({ message: 'Succesfully logged out user.' });
-// };
 
 module.exports = { register, login };
