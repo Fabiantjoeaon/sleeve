@@ -4,11 +4,11 @@ const validate = require('validate.js');
 const { isHashMatching, encrypt } = require('../helpers/hashing');
 
 /**
-*
-* @param {Object} req 
-* @param {Object} res 
-* @returns {}
-*/
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {}
+ */
 const register = async (req, res) => {
     req.body.username = req.sanitize(req.body.username);
     const { username, password } = req.body;
@@ -35,11 +35,11 @@ const register = async (req, res) => {
 };
 
 /**
-*
-* @param {Object} req 
-* @param {Object} res 
-* @returns {}
-*/
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {}
+ */
 const login = async (req, res) => {
     if (!req.body.username || !req.body.password)
         return res
@@ -74,16 +74,16 @@ const login = async (req, res) => {
 };
 
 /**
-*
-* @param {Object} req 
-* @param {Object} res 
-* @returns {}
-*/
-const logout = (req, res) => {
-    req.session.user = null;
-    req.session.token = null;
-    // res.clearCookie('token');
-    return res.status(200).json({ message: 'Succesfully logged out user.' });
-};
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @returns {}
+ */
+// const logout = (req, res) => {
+//     req.session.user = null;
+//     req.session.token = null;
+//     // res.clearCookie('token');
+//     return res.status(200).json({ message: 'Succesfully logged out user.' });
+// };
 
-module.exports = { register, login, logout };
+module.exports = { register, login };

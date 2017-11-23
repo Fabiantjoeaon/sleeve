@@ -22,26 +22,26 @@ const checkSessionToken = async token => {
 };
 
 /**
-*
-* @param {Object} req 
-* @param {Object} res 
-* @param {Function} next 
-* @returns {Function}
-*/
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns {Function}
+ */
 const ensureLoggedOut = async (req, res, next) => {
-    if (req.session.user)
+    if (req.get('authorization'))
         return res.status(400).json({ error: 'You are already logged in.' });
 
     return next();
 };
 
 /**
-*
-* @param {Object} req 
-* @param {Object} res 
-* @param {Function} next 
-* @returns {Function}
-*/
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns {Function}
+ */
 const ensureLoggedIn = async (req, res, next) => {
     const authHeaderToken = req.get('authorization');
 
@@ -52,7 +52,7 @@ const ensureLoggedIn = async (req, res, next) => {
     const user = await User.findOne({ _id: id });
 
     const isLegitToken = await checkSessionToken(authHeaderToken);
-    console.log(isLegitToken);
+
     if (!isLegitToken || !(id == user._id)) {
         req.session.user = null;
         return res.status(400).json({ message: 'Wrong or expired token.' });

@@ -5,7 +5,7 @@ const {
 } = require('../middleware/authMiddleware');
 
 module.exports = app => {
-    app.get('/auth/logout', ensureLoggedIn, authController.logout);
+    // app.get('/auth/logout', ensureLoggedIn, authController.logout);
     app.post('/auth/register', ensureLoggedOut, authController.register);
     app.post('/auth/login', ensureLoggedOut, authController.login);
 
