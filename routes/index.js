@@ -1,5 +1,6 @@
 const authController = require('../controllers/authController');
 const recordController = require('../controllers/recordController');
+const { catchErrors } = require('../helpers/errorHandlers');
 const {
     ensureLoggedIn,
     ensureLoggedOut
@@ -21,14 +22,18 @@ module.exports = app => {
         next();
     });
 
-    app.post('/auth/register', ensureLoggedOut, authController.register);
-    app.post('/auth/login', ensureLoggedOut, authController.login);
+    app.post(
+        '/auth/register',
+        ensureLoggedOut,
+        catchErrors(authController.register)
+    );
+    app.post('/auth/login', ensureLoggedOut, catchErrors(authController.login));
 
-    app.get('/records', recordController.index);
-    app.post('/records', recordController.create);
-    app.get('/records/:id', recordController.show);
-    app.put('/records/:id', recordController.edit);
-    app.delete('/records/:id/edit', recordController.destroy);
+    app.get('/records', catchErrors(recordController.index));
+    app.post('/records', catchErrors(recordController.create));
+    app.get('/records/:id', catchErrors(recordController.show));
+    app.put('/records/:id', catchErrors(recordController.edit));
+    app.delete('/records/:id/edit', catchErrors(recordController.destroy));
 
     app.get('*', (req, res) =>
         res.status(404).send({

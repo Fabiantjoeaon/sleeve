@@ -16,18 +16,10 @@ const index = async (req, res) => {};
  * @returns {}
  */
 const create = async (req, res) => {
-    const errors = validate(req.body, Record.getInitialConstraints());
-    if (errors) res.status(400).json({ errors });
-
-    const record = new Record({ ...req.body });
-    await record.save();
-
-    return res.status(200).json({
-        record,
-        message: `Succesfully created record ${req.body.name} by ${
-            req.body.artist
-        }!`
-    });
+    const record = await new Record(req.body).save();
+    return record.message
+        ? res.status(400).json(record)
+        : res.status(200).json(record);
 };
 
 /**
@@ -36,7 +28,12 @@ const create = async (req, res) => {
  * @param {Object} res
  * @returns {}
  */
-const show = async (req, res) => {};
+const show = async (req, res) => {
+    const record = await Record.findById({ id: req._id });
+    return record
+        ? res.status(200).json(record)
+        : res.status(404).json({ message: 'Resource could not be found' });
+};
 
 /**
  *

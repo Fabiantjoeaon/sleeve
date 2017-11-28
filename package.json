@@ -29,6 +29,7 @@
         "jsonwebtoken": "^8.1.0",
         "mongodb": "^2.2.33",
         "mongoose": "^4.13.3",
+        "mongoose-mongodb-errors": "^0.0.2",
         "validate.js": "^0.12.0"
     }
 }

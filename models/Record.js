@@ -2,38 +2,41 @@ const mongoose = require('mongoose');
 const validate = require('validate.js');
 
 const { Schema } = mongoose;
-mongoose.Promise = global.Promise;
 
 const Record = new Schema(
     {
         name: {
-            type: String
-        },
-        cover: {
-            type: String
+            type: String,
+            required: 'You must supply a name'
         },
         artist: {
-            type: String
+            type: String,
+            required: 'You must supply a name'
         },
         description: {
-            type: String
+            type: String,
+            required: 'You must supply a name'
         },
         tracks: [
             {
-                text: String,
-                trackList: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Track'
-                }
+                type: String,
+                required: 'You must supply a name for a track',
+                trackList: [
+                    {
+                        side: {
+                            type: String,
+                            required: 'You must supply a side for a track'
+                        },
+                        name: {
+                            type: String,
+                            required: 'You must supply a side for a track'
+                        }
+                    }
+                ]
             }
         ],
-        tag: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Tag'
-        },
-        author: {
-            type: Schema.Types.ObjectId,
-            ref: 'User'
+        genre: {
+            type: String
         }
     },
     {
@@ -43,17 +46,5 @@ const Record = new Schema(
         }
     }
 );
-
-Record.statics.getInitialConstraints = () => ({
-    name: {
-        presence: true
-    },
-    artist: {
-        presence: true
-    },
-    description: {
-        presence: true
-    }
-});
 
 module.exports = mongoose.model('Record', Record);
