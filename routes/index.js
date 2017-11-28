@@ -17,6 +17,8 @@ module.exports = app => {
             'Content-Type, Authorization, Content-Length, X-Requested-With'
         );
         res.send(200);
+
+        next();
     });
 
     app.post('/auth/register', ensureLoggedOut, authController.register);

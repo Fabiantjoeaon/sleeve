@@ -10,11 +10,11 @@ const { isHashMatching, encrypt } = require('../helpers/hashing');
  * @returns {}
  */
 const register = async (req, res) => {
-    req.body.username = req.sanitize(req.body.username);
-    const { username, password } = req.body;
-
     const errors = validate(req.body, User.getInitialConstraints());
     if (errors) res.status(400).json({ errors });
+
+    const { username, password } = req.body;
+    req.body.username = req.sanitize(req.body.username);
 
     const existingUser = await User.findOne({
         username

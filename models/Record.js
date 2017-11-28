@@ -44,4 +44,16 @@ const Record = new Schema(
     }
 );
 
+Record.statics.getInitialContraints = () => ({
+    name: {
+        presence: true
+    },
+    artist: {
+        presence: true
+    },
+    description: {
+        presence: true
+    }
+});
+
 module.exports = mongoose.model('Record', Record);

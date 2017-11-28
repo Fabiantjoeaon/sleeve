@@ -61,10 +61,4 @@ User.statics.getInitialConstraints = () => ({
     }
 });
 
-User.methods.comparePassword = async function comparePassword(
-    candidatePassword
-) {
-    return isHashMatching(candidatePassword, this.password);
-};
-
 module.exports = mongoose.model('User', User);

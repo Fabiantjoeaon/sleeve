@@ -1,4 +1,5 @@
 const Record = require('../models/Record');
+const validate = require('validate.js');
 
 /**
  *
@@ -14,7 +15,18 @@ const index = async (req, res) => {};
  * @param {Object} res
  * @returns {}
  */
-const create = async (req, res) => {};
+const create = async (req, res) => {
+    const errors = validate(req.body, Record.getInitialConstraints());
+    if (errors) res.status(400).json({ errors });
+
+    const record = new Record(req.body);
+    await record.save();
+
+    return res.status(200).json({
+        record,
+        message: `Succesfullt created record ${name} by ${artist}!`
+    });
+};
 
 /**
  *
