@@ -7,7 +7,9 @@ const validate = require('validate.js');
  * @param {Object} res
  * @returns {}
  */
-const index = async (req, res) => {};
+const index = async (req, res) => {
+    const records = await Record.find();
+};
 
 /**
  *
@@ -16,10 +18,8 @@ const index = async (req, res) => {};
  * @returns {}
  */
 const create = async (req, res) => {
-    const record = await new Record(req.body).save();
-    return record.message
-        ? res.status(400).json(record)
-        : res.status(200).json(record);
+    const record = await new Record({ ...req.body }).save();
+    return res.status(200).json(record);
 };
 
 /**
@@ -29,10 +29,8 @@ const create = async (req, res) => {
  * @returns {}
  */
 const show = async (req, res) => {
-    const record = await Record.findById({ id: req._id });
-    return record
-        ? res.status(200).json(record)
-        : res.status(404).json({ message: 'Resource could not be found' });
+    const record = await Record.findOne({ _id: req.params.id });
+    return res.status(200).json(record);
 };
 
 /**
@@ -41,7 +39,18 @@ const show = async (req, res) => {
  * @param {Object} res
  * @returns {}
  */
-const edit = async (req, res) => {};
+const edit = async (req, res) => {
+    const record = await Record.findOneAndUpdate(
+        { _id: req.params.id },
+        req.body,
+        {
+            new: true,
+            runValidator: true
+        }
+    ).exec();
+
+    return res.status(200).json(record);
+};
 
 /**
  *
@@ -49,7 +58,10 @@ const edit = async (req, res) => {};
  * @param {Object} res
  * @returns {}
  */
-const destroy = async (req, res) => {};
+const destroy = async (req, res) => {
+    const record = await Record.findOneAndRemove({ _id: req.params.id });
+    return res.status(200).json(record);
+};
 
 module.exports = {
     index,

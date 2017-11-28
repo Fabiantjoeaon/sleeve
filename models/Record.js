@@ -11,11 +11,11 @@ const Record = new Schema(
         },
         artist: {
             type: String,
-            required: 'You must supply a name'
+            required: 'You must supply an artist'
         },
         description: {
             type: String,
-            required: 'You must supply a name'
+            required: 'You must supply an description'
         },
         tracks: [
             {
@@ -46,5 +46,13 @@ const Record = new Schema(
         }
     }
 );
+
+Record.pre('find', function() {
+    console.log('thush', this);
+    this._links = {
+        self: '',
+        collection: ''
+    };
+});
 
 module.exports = mongoose.model('Record', Record);

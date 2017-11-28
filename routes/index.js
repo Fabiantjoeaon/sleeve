@@ -1,3 +1,5 @@
+const express = require('express');
+const mongoose = require('mongoose');
 const authController = require('../controllers/authController');
 const recordController = require('../controllers/recordController');
 const { catchErrors } = require('../helpers/errorHandlers');
@@ -5,39 +7,44 @@ const {
     ensureLoggedIn,
     ensureLoggedOut
 } = require('../middleware/authMiddleware');
+const router = express.Router();
 
-module.exports = app => {
-    app.options('/*', (req, res, next) => {
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header(
-            'Access-Control-Allow-Methods',
-            'GET,PUT,POST,DELETE,OPTIONS'
-        );
-        res.header(
-            'Access-Control-Allow-Headers',
-            'Content-Type, Authorization, Content-Length, X-Requested-With'
-        );
-        res.send(200);
-
-        next();
-    });
-
-    app.post(
-        '/auth/register',
-        ensureLoggedOut,
-        catchErrors(authController.register)
-    );
-    app.post('/auth/login', ensureLoggedOut, catchErrors(authController.login));
-
-    app.get('/records', catchErrors(recordController.index));
-    app.post('/records', catchErrors(recordController.create));
-    app.get('/records/:id', catchErrors(recordController.show));
-    app.put('/records/:id', catchErrors(recordController.edit));
-    app.delete('/records/:id/edit', catchErrors(recordController.destroy));
-
-    app.get('*', (req, res) =>
-        res.status(404).send({
-            error: 'Endpoint does not exist'
-        })
-    );
+const checkId = (req, res, next) => {
+    if (req.params.id) {
+        if (!mongoose.Types.ObjectId.isValid(req.params.id))
+            return res.status(404).json({ message: 'Wrong id' });
+    }
+    return next();
 };
+
+router.options('/*', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Authorization, Content-Length, X-Requested-With'
+    );
+    res.send(200);
+
+    next();
+});
+
+router.post(
+    '/auth/register',
+    ensureLoggedOut,
+    catchErrors(authController.register)
+);
+router.post('/auth/login', ensureLoggedOut, catchErrors(authController.login));
+
+router.get('/records', catchErrors(recordController.index));
+router.post('/records', catchErrors(recordController.create));
+router.get('/records/:id', checkId, catchErrors(recordController.show));
+router.put('/records/:id', checkId, catchErrors(recordController.edit));
+router.delete('/records/:id', checkId, catchErrors(recordController.destroy));
+
+router.use('*', (req, res) =>
+    res.status(404).json({
+        error: 'Endpoint does not exist'
+    })
+);
+module.exports = router;

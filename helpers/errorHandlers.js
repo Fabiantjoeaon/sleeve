@@ -39,11 +39,8 @@ exports.developmentErrors = (err, req, res, next) => {
         )
     };
     res.status(err.status || 500);
+    res.set('Content-Type', 'application/json');
     res.format({
-        // Based on the `Accept` http header
-        'text/html': () => {
-            res.render('error', errorDetails);
-        }, // Form Submit, Reload the page
         'application/json': () => res.json(errorDetails) // Ajax call, send JSON back
     });
 };
@@ -53,8 +50,10 @@ Production Error Handler
 No stacktraces are leaked to user
 */
 exports.productionErrors = (err, req, res, next) => {
+    console.log('here');
     res.status(err.status || 500);
-    res.render('error', {
+    res.set('Content-Type', 'application/json');
+    res.json({
         message: err.message,
         error: {}
     });
