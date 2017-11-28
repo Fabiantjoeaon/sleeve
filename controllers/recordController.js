@@ -19,12 +19,14 @@ const create = async (req, res) => {
     const errors = validate(req.body, Record.getInitialConstraints());
     if (errors) res.status(400).json({ errors });
 
-    const record = new Record(req.body);
+    const record = new Record({ ...req.body });
     await record.save();
 
     return res.status(200).json({
         record,
-        message: `Succesfullt created record ${name} by ${artist}!`
+        message: `Succesfully created record ${req.body.name} by ${
+            req.body.artist
+        }!`
     });
 };
 

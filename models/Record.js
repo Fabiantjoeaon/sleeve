@@ -44,7 +44,7 @@ const Record = new Schema(
     }
 );
 
-Record.statics.getInitialContraints = () => ({
+Record.statics.getInitialConstraints = () => ({
     name: {
         presence: true
     },
