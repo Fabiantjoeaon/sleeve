@@ -12,7 +12,7 @@ const routes = require('./routes');
 
 const app = express();
 
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(helmet());
 app.use(helmet.hidePoweredBy());
@@ -20,11 +20,13 @@ app.use(helmet.noSniff());
 app.use(expressSanitizer({}));
 
 app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Allow', 'GET');
-    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.set(
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Allow', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PUT, DELETE, OPTIONS'
+    );
+    res.header(
         'Access-Control-Allow-Headers',
         'Content-Type, Authorization, Content-Length, X-Requested-With'
     );
