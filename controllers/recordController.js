@@ -45,6 +45,8 @@ const index = async (req, res) => {
  * @returns {}
  */
 const create = async (req, res) => {
+    if (!req.body.name || !req.body.description || !req.body.artist)
+        return res.status(422).json({ error: 'No input' });
     const record = await new Record(req.body).save();
     return res.status(201).json(record);
 };
@@ -78,6 +80,8 @@ const show = async (req, res) => {
  * @returns {}
  */
 const edit = async (req, res) => {
+    if (!req.body.name || !req.body.description || !req.body.artist)
+        return res.status(422).json({ error: 'No input' });
     const record = await Record.findOneAndUpdate(
         { _id: req.params.id },
         req.body,

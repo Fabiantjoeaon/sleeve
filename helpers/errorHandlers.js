@@ -50,7 +50,6 @@ Production Error Handler
 No stacktraces are leaked to user
 */
 exports.productionErrors = (err, req, res, next) => {
-    console.log('here');
     res.status(err.status || 500);
     res.set('Content-Type', 'application/json');
     res.json({
