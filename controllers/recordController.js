@@ -8,7 +8,28 @@ const validate = require('validate.js');
  * @returns {}
  */
 const index = async (req, res) => {
-    const records = await Record.find();
+    const records = await Record.find()
+        .skip(parseInt(req.query.start, 10))
+        .limit(parseInt(req.query.limit, 10))
+        .sort({ name: 'asc' });
+
+    return res.status(200).json({
+        records: records.map(r => ({
+            ...r.toObject(),
+            _links: {
+                self: {
+                    href: `${req.protocol}://${req.get('host')}${
+                        req.originalUrl
+                    }/${r._id}`
+                },
+                collection: {
+                    href: `${req.protocol}://${req.get('host')}${
+                        req.originalUrl
+                    }`
+                }
+            }
+        }))
+    });
 };
 
 /**
@@ -30,7 +51,19 @@ const create = async (req, res) => {
  */
 const show = async (req, res) => {
     const record = await Record.findOne({ _id: req.params.id });
-    return res.status(200).json(record);
+    return res.status(200).json({
+        ...record.toObject(),
+        _links: {
+            self: {
+                href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${
+                    record._id
+                }`
+            },
+            collection: {
+                href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
+            }
+        }
+    });
 };
 
 /**

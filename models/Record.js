@@ -47,12 +47,15 @@ const Record = new Schema(
     }
 );
 
-Record.pre('find', function() {
-    console.log('thush', this);
-    this._links = {
-        self: '',
-        collection: ''
-    };
+Record.pre('find', function(next) {
+    this.bla = 'efuhef';
+
+    next();
+});
+
+Record.pre('findOne', function(next) {
+    this.bla = 'hufehfe';
+    next();
 });
 
 module.exports = mongoose.model('Record', Record);
