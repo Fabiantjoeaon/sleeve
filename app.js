@@ -21,6 +21,7 @@ app.use(expressSanitizer({}));
 
 app.use((req, res, next) => {
     res.header('Content-Type', 'application/json');
+    res.header('Accept', 'application/json');
     req.accepts('application/json');
     return next();
 });
