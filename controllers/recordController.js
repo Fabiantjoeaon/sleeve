@@ -64,7 +64,7 @@ const show = async (req, res) => {
                 href: createUrl(req)
             },
             collection: {
-                href: createUrl(req)
+                href: `${req.protocol}://${req.get('host')}/records`
             }
         }
     });
