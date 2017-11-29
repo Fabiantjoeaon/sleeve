@@ -39,8 +39,8 @@ const index = async (req, res) => {
             limit: req.query.limit ? req.query.limit : 0,
             _links: {
                 first: {
-                    page: records.length / recordCount,
-                    href: createUrl(req)
+                    page: 1,
+                    href: `${createUrl(req)}/?limit=0&start=0`
                 },
                 last: {
                     page: records.length / recordCount,
