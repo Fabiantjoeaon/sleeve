@@ -3,6 +3,7 @@ require('dotenv').config({ path: 'variables.env' });
 const express = require('express');
 const mongoose = require('mongoose');
 
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const expressSanitizer = require('express-sanitizer');
@@ -15,6 +16,7 @@ const app = express();
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false }));
 app.use(helmet());
+app.use(cors());
 app.use(helmet.hidePoweredBy());
 app.use(helmet.noSniff());
 app.use(expressSanitizer({}));
