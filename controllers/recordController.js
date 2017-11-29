@@ -57,6 +57,7 @@ const create = async (req, res) => {
  */
 const show = async (req, res) => {
     const record = await Record.findOne({ _id: req.params.id });
+    if (!record) return res.status(404).json({ error: 'Not found' });
     return res.status(201).json({
         ...record.toObject(),
         _links: {
@@ -85,7 +86,7 @@ const edit = async (req, res) => {
             runValidator: true
         }
     ).exec();
-
+    if (!record) return res.status(404).json({ error: 'Not found' });
     return res.status(204).json(record);
 };
 
@@ -97,6 +98,7 @@ const edit = async (req, res) => {
  */
 const destroy = async (req, res) => {
     const record = await Record.findOneAndRemove({ _id: req.params.id });
+    if (!record) return res.status(404).json({ error: 'Not found' });
     return res.status(204).json(record);
 };
 
