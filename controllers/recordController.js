@@ -36,7 +36,25 @@ const index = async (req, res) => {
             currentItems: records.length,
             totalItems: recordCount,
             start: req.query.start ? req.query.start : 0,
-            limit: req.query.limit ? req.query.limit : 0
+            limit: req.query.limit ? req.query.limit : 0,
+            _links: {
+                first: {
+                    page: records.length / recordCount,
+                    href: createUrl(req)
+                },
+                last: {
+                    page: records.length / recordCount,
+                    href: createUrl(req)
+                },
+                previous: {
+                    page: records.length / recordCount,
+                    href: createUrl(req)
+                },
+                next: {
+                    page: records.length / recordCount,
+                    href: createUrl(req)
+                }
+            }
         }
     });
 };
