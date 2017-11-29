@@ -65,7 +65,7 @@ const index = async (req, res) => {
                     page: totalPages,
                     href: `${createUrlThisResource(req)}/?limit=${
                         limit
-                    }&start=${lastPagePosition}`
+                    }&start=${lastPagePosition + 1}`
                 },
                 previous: {
                     page: previousPage,
