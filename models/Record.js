@@ -48,7 +48,7 @@ const Record = new Schema({
     //     }
 });
 
-const ensureNotEmpty = val => val.length === 0 || !val.trim();
+const ensureNotEmpty = val => !val.length === 0 || val.trim();
 Record.path('name').validate(
     ensureNotEmpty,
     'Name must be longer than 2 characters'
