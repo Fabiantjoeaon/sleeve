@@ -1,5 +1,6 @@
 const Record = require('../models/Record');
 const validate = require('validate.js');
+const createUrl = require('../helpers/createUrl');
 
 /**
  *
@@ -14,21 +15,26 @@ const index = async (req, res) => {
         .sort({ name: 'asc' });
 
     return res.status(200).json({
-        records: records.map(r => ({
+        items: records.map(r => ({
             ...r.toObject(),
             _links: {
                 self: {
-                    href: `${req.protocol}://${req.get('host')}${
-                        req.originalUrl
-                    }/${r._id}`
+                    href: createUrl(req, r._id)
                 },
                 collection: {
-                    href: `${req.protocol}://${req.get('host')}${
-                        req.originalUrl
-                    }`
+                    href: createUrl(req)
                 }
             }
-        }))
+        })),
+        links: {
+            self: {
+                href: createUrl(req)
+            }
+        },
+        pagination: {
+            start: req.query.start,
+            limit: req.query.limit
+        }
     });
 };
 

@@ -28,7 +28,7 @@ router.options('/records', (req, res, next) => {
         'Access-Control-Allow-Headers',
         'Content-Type, Authorization, Content-Length, X-Requested-With'
     );
-    // res.send(200);
+    res.sendStatus(200);
     // res.end();
 
     next();
