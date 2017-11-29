@@ -21,11 +21,6 @@ app.use(expressSanitizer({}));
 
 app.use((req, res, next) => {
     res.header('Content-Type', 'application/json');
-    // res.header(
-    //     'Access-Control-Allow-Headers',
-    //     'Content-Type, Authorization, Content-Length, X-Requested-With'
-    // );
-    // res.header('Access-Control-Allow-Origin', '*');
     res.header('Accept', 'application/json');
     if (!req.accepts('application/json')) {
         return res.status(400).send({ error: 'Wrong type' });

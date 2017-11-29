@@ -17,7 +17,22 @@ const checkId = (req, res, next) => {
     return next();
 };
 
+const detailHeaderMiddleware = (req, res, next) => {
+    return next();
+};
+
 router.options('/records', (req, res) => {
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Authorization, Content-Length, X-Requested-With'
+    );
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.header('Allow', 'GET,POST,OPTIONS');
+    res.sendStatus(200);
+});
+
+router.options('/records/:id', (req, res) => {
     res.header(
         'Access-Control-Allow-Headers',
         'Content-Type, Authorization, Content-Length, X-Requested-With'
