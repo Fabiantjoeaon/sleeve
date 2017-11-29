@@ -2,6 +2,9 @@ const Record = require('../models/Record');
 const validate = require('validate.js');
 const createUrl = require('../helpers/createUrl');
 
+const createUrlThisResource = req =>
+    `${req.protocol}://${req.get('host')}/records`;
+
 /**
  *
  * @param {Object} req
@@ -9,11 +12,25 @@ const createUrl = require('../helpers/createUrl');
  * @returns {}
  */
 const index = async (req, res) => {
+    const { start } = req.query;
+    let { limit } = req.query;
+    limit = limit ? limit : 20;
+
     const records = await Record.find()
-        .skip(parseInt(req.query.start, 10))
-        .limit(parseInt(req.query.limit, 10))
+        .skip(parseInt(start, 10))
+        .limit(parseInt(limit, 10))
         .sort({ name: 'asc' });
     const recordCount = await Record.count();
+
+    if (limit > recordCount)
+        return res.status(400).json({ error: 'Limit is out of range' });
+
+    const totalPages = Math.ceil(recordCount / limit);
+    const currentPage = Math.ceil((start - 1) / records.length + 1);
+    const lastPagePosition = recordCount - records.length;
+
+    if (start > lastPagePosition)
+        return res.status(400).json({ error: 'Start is out of range' });
 
     return res.status(200).json({
         items: records.map(r => ({
@@ -35,24 +52,32 @@ const index = async (req, res) => {
         pagination: {
             currentItems: records.length,
             totalItems: recordCount,
-            start: req.query.start ? req.query.start : 0,
-            limit: req.query.limit ? req.query.limit : 0,
+            totalPages,
+            currentPage,
             _links: {
                 first: {
                     page: 1,
-                    href: `${createUrl(req)}/?limit=0&start=0`
+                    href: `${createUrlThisResource(req)}/?limit=${
+                        limit
+                    }&start=1`
                 },
                 last: {
-                    page: records.length / recordCount,
-                    href: createUrl(req)
+                    page: totalPages,
+                    href: `${createUrlThisResource(req)}/?limit=${
+                        limit
+                    }&start=${lastPagePosition}`
                 },
                 previous: {
-                    page: records.length / recordCount,
-                    href: createUrl(req)
+                    page: currentPage - 1,
+                    href: `${createUrlThisResource(req)}/?limit=${
+                        limit
+                    }&start=${records.length * (currentPage - 2)}`
                 },
                 next: {
-                    page: records.length / recordCount,
-                    href: createUrl(req)
+                    page: currentPage + 1,
+                    href: `${createUrlThisResource(req)}/?limit=${
+                        limit
+                    }&start=${records.length * currentPage}`
                 }
             }
         }
@@ -88,7 +113,7 @@ const show = async (req, res) => {
                 href: createUrl(req)
             },
             collection: {
-                href: `${req.protocol}://${req.get('host')}/records`
+                href: createUrlThisResource(req)
             }
         }
     });
