@@ -20,7 +20,7 @@ const checkId = (req, res, next) => {
 router.options('/records', (req, res, next) => {
     res.sendStatus(200);
 
-    next();
+    return next();
 });
 
 router.post(
