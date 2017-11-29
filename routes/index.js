@@ -17,6 +17,22 @@ const checkId = (req, res, next) => {
     return next();
 };
 
+router.options('/records', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.header('Allow', 'GET,POST,OPTIONS');
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Authorization, Content-Length, X-Requested-With'
+    );
+    res.sendStatus(200);
+});
+
+router.use('/records', (req, res, next) => {
+    res.header('Content-Type', 'application/json');
+    req.accepts('application/json');
+    return next();
+});
 router.post(
     '/auth/register',
     ensureLoggedOut,
@@ -29,18 +45,6 @@ router.post('/records', catchErrors(recordController.create));
 router.get('/records/:id', checkId, catchErrors(recordController.show));
 router.put('/records/:id', checkId, catchErrors(recordController.edit));
 router.delete('/records/:id', checkId, catchErrors(recordController.destroy));
-
-router.options('/records', (req, res) => {
-    console.log('options');
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-    res.header('Allow', 'GET,POST,OPTIONS');
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Authorization, Content-Length, X-Requested-With'
-    );
-    res.sendStatus(200);
-});
 
 router.use('*', (req, res) =>
     res.status(404).json({
