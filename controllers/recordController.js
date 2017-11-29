@@ -81,7 +81,7 @@ const edit = async (req, res) => {
         { _id: req.params.id },
         req.body,
         {
-            new: true,
+            // new: true,
             runValidator: true
         }
     ).exec();
