@@ -48,15 +48,18 @@ const Record = new Schema({
     //     }
 });
 
-Record.pre('find', function(next) {
-    this.bla = 'efuhef';
-
-    next();
-});
-
-Record.pre('findOne', function(next) {
-    this.bla = 'hufehfe';
-    next();
-});
+const ensureNotEmpty = val => val.length > 2;
+Record.path('name').validate(
+    ensureNotEmpty,
+    'Name must be longer than 2 characters'
+);
+Record.path('description').validate(
+    ensureNotEmpty,
+    'Description must be longer than 2 characters'
+);
+Record.path('artist').validate(
+    ensureNotEmpty,
+    'Artist must be longer than 2 characters'
+);
 
 module.exports = mongoose.model('Record', Record);
