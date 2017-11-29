@@ -6,14 +6,17 @@ const { Schema } = mongoose;
 const Record = new Schema({
     name: {
         type: String,
+        minLength: 2,
         required: 'You must supply a name'
     },
     artist: {
         type: String,
+        minLength: 2,
         required: 'You must supply an artist'
     },
     description: {
         type: String,
+        minLength: 2,
         required: 'You must supply an description'
     }
     //     tracks: [

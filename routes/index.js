@@ -39,6 +39,10 @@ router.post(
 );
 router.post('/auth/login', ensureLoggedOut, catchErrors(authController.login));
 
+router.use('/records', (req, res, next) => {
+    res.header('Allow', 'POST, GET, OPTIONS');
+    next();
+});
 router.get('/records', catchErrors(recordController.index));
 router.post('/records', catchErrors(recordController.create));
 router.get('/records/:id', checkId, catchErrors(recordController.show));
