@@ -30,6 +30,8 @@ const index = async (req, res) => {
     if (start > lastPagePosition)
         return res.status(400).json({ error: 'Start is out of range' });
 
+    const previousPage = currentPage === 1 ? currentPage : currentPage - 1;
+
     return res.status(200).json({
         items: records.map(r => ({
             ...r.toObject(),
@@ -66,16 +68,18 @@ const index = async (req, res) => {
                     }&start=${lastPagePosition}`
                 },
                 previous: {
-                    page: currentPage - 1,
+                    page: previousPage,
                     href: `${createUrlThisResource(req)}/?limit=${
                         limit
-                    }&start=${records.length * (currentPage - 2)}`
+                    }&start=${
+                        previousPage === 1 ? 1 : previousPage * records.length
+                    }`
                 },
                 next: {
                     page: currentPage + 1,
                     href: `${createUrlThisResource(req)}/?limit=${
                         limit
-                    }&start=${records.length * currentPage}`
+                    }&start=${currentPage + 1 * records.length}`
                 }
             }
         }
