@@ -17,20 +17,20 @@ const checkId = (req, res, next) => {
     return next();
 };
 
-router.options('/records', (req, res, next) => {
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Allow', 'GET');
-    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.set('Accept', 'application/json');
-    res.set(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Authorization, Content-Length, X-Requested-With'
-    );
-    res.sendStatus(200);
+// router.options('/records', (req, res, next) => {
+//     res.set('Access-Control-Allow-Origin', '*');
+//     res.set('Allow', 'GET');
+//     // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//     res.set('Accept', 'application/json');
+//     res.set(
+//         'Access-Control-Allow-Headers',
+//         'Content-Type, Authorization, Content-Length, X-Requested-With'
+//     );
+//     res.sendStatus(200);
 
-    return next();
-});
+//     return next();
+// });
 
 router.post(
     '/auth/register',
