@@ -18,13 +18,8 @@ const checkId = (req, res, next) => {
 };
 
 router.options('/records', (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.header('Allow', 'GET,POST,OPTIONS');
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Authorization, Content-Length, X-Requested-With'
-    );
     res.sendStatus(200);
 });
 
