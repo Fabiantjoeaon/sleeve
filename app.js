@@ -19,6 +19,12 @@ app.use(helmet.hidePoweredBy());
 app.use(helmet.noSniff());
 app.use(expressSanitizer({}));
 
+app.use((req, res, next) => {
+    res.header('Content-Type', 'application/json');
+    req.accepts('application/json');
+    return next();
+});
+
 app.use(routes);
 
 app.use(errorHandlers.notFound);

@@ -28,11 +28,6 @@ router.options('/records', (req, res) => {
     res.sendStatus(200);
 });
 
-router.use('/records', (req, res, next) => {
-    res.header('Content-Type', 'application/json');
-    req.accepts('application/json');
-    return next();
-});
 router.post(
     '/auth/register',
     ensureLoggedOut,
