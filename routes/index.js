@@ -17,7 +17,7 @@ const checkId = (req, res, next) => {
     return next();
 };
 
-router.options('/*', (req, res, next) => {
+router.options('/records', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header(
