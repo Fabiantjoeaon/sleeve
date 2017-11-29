@@ -29,7 +29,7 @@ router.options('/records', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.header('Allow', 'GET,POST,OPTIONS');
-    res.sendStatus(200);
+    return res.sendStatus(200);
 });
 
 router.options('/records/:id', (req, res) => {
@@ -38,9 +38,9 @@ router.options('/records/:id', (req, res) => {
         'Content-Type, Authorization, Content-Length, X-Requested-With'
     );
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-    res.header('Allow', 'GET,POST,OPTIONS');
-    res.sendStatus(200);
+    res.header('Access-Control-Allow-Methods', 'PUT,GET, DELETE, OPTIONS');
+    res.header('Allow', 'PUT,GET, DELETE, OPTIONS');
+    return res.sendStatus(200);
 });
 
 router.post(

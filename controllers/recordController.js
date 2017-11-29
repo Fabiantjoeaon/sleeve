@@ -26,7 +26,7 @@ const index = async (req, res) => {
                 }
             }
         })),
-        links: {
+        _links: {
             self: {
                 href: createUrl(req)
             }
