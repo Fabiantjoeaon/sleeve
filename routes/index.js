@@ -17,20 +17,20 @@ const checkId = (req, res, next) => {
     return next();
 };
 
-// router.options('/records', (req, res, next) => {
-//     res.set('Access-Control-Allow-Origin', '*');
-//     res.set('Allow', 'GET');
-//     // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-//     res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//     res.set('Accept', 'application/json');
-//     res.set(
-//         'Access-Control-Allow-Headers',
-//         'Content-Type, Authorization, Content-Length, X-Requested-With'
-//     );
-//     res.sendStatus(200);
+router.options('/records', (req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.header('Allow', 'POST, GET, OPTIONS');
+    // res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.set('Accept', 'application/json');
+    res.set(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Authorization, Content-Length, X-Requested-With'
+    );
+    res.sendStatus(200);
 
-//     return next();
-// });
+    return next();
+});
 
 router.post(
     '/auth/register',
@@ -39,10 +39,6 @@ router.post(
 );
 router.post('/auth/login', ensureLoggedOut, catchErrors(authController.login));
 
-router.use('/records', (req, res, next) => {
-    res.header('Allow', 'POST, GET, OPTIONS');
-    next();
-});
 router.get('/records', catchErrors(recordController.index));
 router.post('/records', catchErrors(recordController.create));
 router.get('/records/:id', checkId, catchErrors(recordController.show));
