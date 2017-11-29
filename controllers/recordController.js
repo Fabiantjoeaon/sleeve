@@ -61,12 +61,10 @@ const show = async (req, res) => {
         ...record.toObject(),
         _links: {
             self: {
-                href: `${req.protocol}://${req.get('host')}${req.originalUrl}/${
-                    record._id
-                }`
+                href: createUrl(req)
             },
             collection: {
-                href: `${req.protocol}://${req.get('host')}${req.originalUrl}`
+                href: createUrl(req)
             }
         }
     });
