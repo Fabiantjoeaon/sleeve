@@ -13,6 +13,7 @@ const index = async (req, res) => {
         .skip(parseInt(req.query.start, 10))
         .limit(parseInt(req.query.limit, 10))
         .sort({ name: 'asc' });
+    const recordCount = await Record.count();
 
     return res.status(200).json({
         items: records.map(r => ({
@@ -32,6 +33,8 @@ const index = async (req, res) => {
             }
         },
         pagination: {
+            currentItems: records.length,
+            totalItems: recordCount,
             start: req.query.start ? req.query.start : 0,
             limit: req.query.limit ? req.query.limit : 0
         }
