@@ -46,7 +46,7 @@ const index = async (req, res) => {
  */
 const create = async (req, res) => {
     const record = await new Record(req.body).save();
-    return res.status(200).json(record);
+    return res.status(201).json(record);
 };
 
 /**
