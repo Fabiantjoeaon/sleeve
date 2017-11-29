@@ -57,7 +57,7 @@ const create = async (req, res) => {
  */
 const show = async (req, res) => {
     const record = await Record.findOne({ _id: req.params.id });
-    return res.status(200).json({
+    return res.status(201).json({
         ...record.toObject(),
         _links: {
             self: {
@@ -86,7 +86,7 @@ const edit = async (req, res) => {
         }
     ).exec();
 
-    return res.status(200).json(record);
+    return res.status(204).json(record);
 };
 
 /**
@@ -97,7 +97,7 @@ const edit = async (req, res) => {
  */
 const destroy = async (req, res) => {
     const record = await Record.findOneAndRemove({ _id: req.params.id });
-    return res.status(200).json(record);
+    return res.status(204).json(record);
 };
 
 module.exports = {
