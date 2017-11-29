@@ -32,8 +32,8 @@ const index = async (req, res) => {
             }
         },
         pagination: {
-            start: req.query.start,
-            limit: req.query.limit
+            start: req.query.start ? req.query.start : 0,
+            limit: req.query.limit ? req.query.limit : 0
         }
     });
 };
