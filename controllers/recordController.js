@@ -12,9 +12,7 @@ const createUrlThisResource = req =>
  * @returns {}
  */
 const index = async (req, res) => {
-    const { start } = req.query;
-    let { limit } = req.query;
-    limit = limit ? limit : 20;
+    const { start, limit } = req.query;
 
     const records = await Record.find()
         .skip(parseInt(start, 10))
