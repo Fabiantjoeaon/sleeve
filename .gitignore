@@ -58,3 +58,6 @@ typings/
 .env
 variables.env
 
+.next
+.next/*
+

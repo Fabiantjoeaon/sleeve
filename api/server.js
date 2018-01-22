@@ -12,7 +12,7 @@ mongoose.connection.on('error', err => {
 // require('./models/User');
 // require('./models/Record');
 
-app.set('port', process.env.SERVER_PORT);
+app.set('port', process.env.API_PORT);
 const server = app.listen(app.get('port'), () => {
     console.log(`Server running → PORT ${server.address().port}`);
 });
