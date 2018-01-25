@@ -24,7 +24,7 @@ const index = async (req, res) => {
         return res.status(400).json({ error: 'Limit is out of range' });
 
     const totalPages = Math.ceil(recordCount / limit);
-    const currentPage = Math.ceil((start - 1) / records.length + 1);
+    let currentPage = Math.ceil((start - 1) / records.length + 1);
     const lastPagePosition = recordCount - records.length;
 
     if (start > lastPagePosition)
@@ -57,29 +57,31 @@ const index = async (req, res) => {
             _links: {
                 first: {
                     page: 1,
-                    href: `${createUrlThisResource(req)}/?limit=${
-                        limit
-                    }&start=1`
+                    href: `${createUrlThisResource(
+                        req
+                    )}/?limit=${limit}&start=1`
                 },
                 last: {
                     page: totalPages,
-                    href: `${createUrlThisResource(req)}/?limit=${
-                        limit
-                    }&start=${lastPagePosition + 1}`
+                    href: `${createUrlThisResource(
+                        req
+                    )}/?limit=${limit}&start=${lastPagePosition + 1}`
                 },
                 previous: {
                     page: previousPage,
-                    href: `${createUrlThisResource(req)}/?limit=${
-                        limit
-                    }&start=${
+                    href: `${createUrlThisResource(
+                        req
+                    )}/?limit=${limit}&start=${
                         previousPage === 1 ? 1 : previousPage * records.length
                     }`
                 },
                 next: {
                     page: currentPage + 1,
-                    href: `${createUrlThisResource(req)}/?limit=${
-                        limit
-                    }&start=${currentPage + 1 * records.length}`
+                    href: `${createUrlThisResource(
+                        req
+                    )}/?limit=${limit}&start=${Number(
+                        currentPage + 1 * records.length
+                    )}`
                 }
             }
         }

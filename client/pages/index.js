@@ -10,27 +10,32 @@ export default class IndexPage extends Component {
     };
 
     async componentDidMount() {
-        const { data } = await axios(apiUrl());
-        this.setState({ records: data.items });
+        await this.fetchData(`${apiUrl()}`);
+    }
+
+    async fetchData(url) {
+        const { data } = await axios(url);
+        const { items: records } = data;
+        this.setState({ records });
     }
 
     render() {
+        const { records } = this.state;
+
         return (
             <div>
                 <Link href="/create">
                     <a>Create a new record</a>
                 </Link>
 
-                {this.state.records.map(r => (
-                    <li key={r._id}>
-                        <Link
-                            as={`/record/${r._id}`}
-                            href={`/record?id=${r._id}`}
-                        >
-                            <a>{r.artist}</a>
-                        </Link>
-                    </li>
-                ))}
+                {records.length > 0 &&
+                    records.map(r => (
+                        <li key={r._id}>
+                            <Link href={`/record?id=${r._id}`}>
+                                <a>{r.artist}</a>
+                            </Link>
+                        </li>
+                    ))}
             </div>
         );
     }
